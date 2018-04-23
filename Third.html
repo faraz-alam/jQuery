@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>  
+<head>
+    <style>
+        .failed{border-left: 5px solid red;}
+        .passed{border-left: 5px solid green;}
+    </style>
+</head>
+<body>
+    Name:
+    <input type="text" id="txt1"/>
+    <span id="msg1">Name is required</span>
+    Age:
+    <input type="text" id="txt2"/>
+    <span id="msg2">Age is required</span>
+    <button>Show</button>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                var jQ = $.noConflict();
+                jQ(document).ready(function(){
+                        //jQ('button').click(function(){
+                                //var i = jQ('#txt1').val();   
+                                //alert(i);  
+                                jQ('button').hide();
+                                    jQ('#txt1').blur(function(){
+                                            if(jQ(this).val() == ''){
+                                            jQ('#msg1').show(1000);
+                                            //alert('Name is required');
+                                            //jQ(this).focus();
+                                            jQ(this).addClass('failed');
+                                            }
+                                            else{
+                                                jQ('#msg1').hide(1000);
+                                                jQ(this).removeClass().addClass('passed');
+                                                jQ(this).css('background','#eeeeee');
+                                            }
+                                    });    
+                                    jQ('#txt2').blur(function(){
+                                            if(jQ(this).val() == ''){
+                                            jQ('#msg2').show(1000);
+                                            //alert('Age is required');
+                                            //jQ(this).focus();
+                                            jQ(this).addClass('failed');
+                                            }
+                                            else{
+                                                jQ('#msg2').hide(1000);
+                                                jQ(this).removeClass().addClass('passed');
+                                                jQ(this).css('background','#eeeeee');
+                                            }
+                                    }); 
+                                    function test(){
+                                    if(jQ(('#txt1').val() != '') &&  (('#txt2').val()) != '') {
+                                        jQ('button').show();
+                                    }
+                                    else{
+                                        jQ('button').hide();
+                                        }
+                                    }
+                });
+            </script>  
+</body>
+</html>
