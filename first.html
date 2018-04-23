@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>  
+<head></head>
+<body>
+    <p>Demo text</p>
+    <p>jQuery</p>
+    <p>javaScript</p>
+    <button>Show</button>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                var jQ = $.noConflict();
+                jQ(document).ready(function(){
+                        jQ('p').click(function(){
+                            // jQ('p').hide(2000);
+                            //jQ(this).show(2000, function(){
+                                //alert();
+                            //});
+                        });
+                            jQ('button').click(function(){
+                                //jQ('p').show(3000);
+                                //jQ('p').toggle(3000);
+                                jQ('p').hide(2000).toggle(2000).fadeTo(2000,0.2);
+                            });
+                });
+            </script>  
+</body>
+</html>
