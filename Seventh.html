@@ -1,0 +1,90 @@
+<html>
+<head></head>
+<body>
+    
+    <form>
+            Name: <input type="text" id="txt1" name="username"/>
+            Age: <input type="text" id="txt2" name="userage"/>
+            Email: <input type="text" id="txt3" name="useremail"/>
+            <input type="submit" value="Submit"/>
+    </form>
+    
+    <div>
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th></th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                var jQ = $.noConflict();
+                jQ(document).ready(function(){
+                    jQ('form').submit(function(e){
+                        // Remove the default functunality of form.
+                        e.preventDefault();
+                        // Set the endPoint of your API followed by /tablename.json
+                        var endPoint = 'https://jquery-session.firebaseio.com/employees.json';
+                        // Create the data to be sent as serialize doesn't works for some web servers.
+                        var data = {
+                            username: jQ('#txt1').val(),
+                            userage: jQ('#txt2').val(),
+                            useremail: jQ('#txt3').val(),
+                        };
+                        //jQ(this).serialize();// This doesn't works with some web server/with Firebase.
+                        // Hit a Post request on the server(endPoint, change the data in the form of JSON object). After, set a call back function with then to perform any operation after server has replied.
+                        jQ.post(endPoint,JSON.stringify(data)).then(function(data){
+                            console.log('success',data);
+                        }).fail(function(err){
+                            console.log('error',err);
+                        });
+                    });
+                        // Function to delete data from the server
+                        // Here you cannot talk directly to the delete as this is happening at the run time not the load time.
+                        // Hence, we have to talk to a static person i.e. tbody and apply a dynamic click function on delete.
+                        jQ('tbody').on('click','.delete',function(e){
+                            e.preventDefault();
+                            //Now, extract the key in variable id.
+                            var id = jQ(this).data('id');
+                            // Now, put the end point as table/'+field_which_is_needed_to_be_deleted+'.json
+                            var endPoint ='https://jquery-session.firebaseio.com/employees/'+id+'.json';
+                            // For, deleting data from server, use the generic call .ajax with url as endPoint and method as 'DELETE' 
+                            jQ.ajax({
+                                url:  endPoint,
+                                method: 'DELETE'
+                            }).then(function(data){
+                            console.log('success',data);
+                        }).fail(function(err){
+                            console.log('error',err);
+                        });
+                        });
+                        //Function to fetch data from the server.
+                        function getData(){
+                            // Set the endPoint of your API followed by /tablename.json
+                            var endPoint = 'https://jquery-session.firebaseio.com/employees.json';
+                            // Hit a get request in the form of JSON to fetch the data from the server. After, set a call back function with then to perform any operation after server has replied.
+                            jQ.getJSON(endPoint).then(function(data){
+                            console.log('success',data);
+                            // Now, iterate through the data and append/add the retrieved data into the table body.
+                            jQ.each(data,function(key,value){
+                                 var tag = '<tr><td>'+value.username+'</td>';
+                                 tag += '<td>'+value.userage+'</td>';
+                                 tag += '<td>'+value.useremail+'</td>';
+                                 tag += '<td><a href ="#" class="delete" data-id="'+key+'">Delete</a></td></tr>';
+                                 jQ('tbody').append(tag);
+                            });
+                            }).fail(function(err){
+                            console.log('error',err);
+                        });
+                        }
+                        getData();
+                });
+        </script>
+
+</body>
+</html>

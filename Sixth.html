@@ -1,0 +1,31 @@
+<html>
+<head></head>
+<body>
+    
+    <div class ="article">
+        <div>
+            <img src="" height="200" width="200" alt="no img"/>  
+            <div>     
+                <h3>Article 1</h3>
+                <a href="#" class="readmore">Read more</a>
+            </div>   
+        </div> 
+        <div>   
+        <p class = "description">This is article 1 description</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                var jQ = $.noConflict();
+                jQ(document).ready(function(){
+                    jQ('.description').hide();// This hides the description(paragraph).
+                    jQ('.readmore').click(function(e){
+                        e.preventDefault();// This prevents the default function of readmore(anchor tag).
+                    //jQ(this).parent().next().toggle(2000);// This toggles the next sibling of parent(anchor tag).
+                    jQ(this).parent().parent().next().children().toggle(2000);// This toggles the parent's parent next children.
+                    });
+                });
+            </script>
+</body>
+</html>
