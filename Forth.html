@@ -1,0 +1,41 @@
+<html>
+<head></head>
+<body>
+    <form method="GET" action="http://google.com"> 
+        Name: <input type ="text" id = "txt1" name="username"/>
+        Age: <input type = "text" id = "txt2" name="userage"/>
+        <input type = "submit" value="Submit"/>
+    </form>
+    <div>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Age</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <p id ="p1">This is <b>bold text</b></p>
+    <button type ="button" id = "btn1">Change text</button>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                var jQ = $.noConflict();
+                jQ(document).ready(function(){
+                    jQ('form').submit(function(e){
+                        e.preventDefault();//It prevents the form to submit the data to google.com as it is in action. i.e it prevents the default method of submit from form tag.
+                        var tag = '<tr><td>'+jQ('#txt1').val() + '</td>';
+                        tag += '<td>'+jQ('#txt2').val() + '</td></tr>';
+                        jQ('tbody').append(tag);// This appends/adds the value from the table data to the table body in the bottom of the table.
+                        jQ('#txt1').val('');// To clear out the data visible in the text boxes of the form.
+                        jQ('#txt2').val('');// We are filling the data as nothing in the text boxes of the form.
+                    });
+                    jQ('#btn1').click(function(){
+                        //jQ('#p1').text('this is modified text');// This modifies the paragragh with the new text.
+                        jQ('#p1').html('this is <u>modified</u> text');// This modifies the pararagh with new text along with the html tags applied.
+                    });
+                });
+            </script>
+</body>
+</html>
